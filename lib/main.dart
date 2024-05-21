@@ -1,5 +1,5 @@
-import 'first.dart';
-import 'second.dart';
+import 'src/pages/first.dart';
+import 'src/pages/second.dart';
 import 'package:flutter/material.dart';
 
 void main() {
