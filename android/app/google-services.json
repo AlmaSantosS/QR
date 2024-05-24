@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "576082975644",
+    "project_id": "qrstar-deles",
+    "storage_bucket": "qrstar-deles.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:576082975644:android:c0f8e086c08e74362e8659",
+        "android_client_info": {
+          "package_name": "com.googleservices.comqr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "576082975644-gge1hpdrkibhn1q6fcekve1as09bi3ua.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwYdN_tg3_I6sYqFbo2BAmh6PqtacEH1U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "576082975644-gge1hpdrkibhn1q6fcekve1as09bi3ua.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
