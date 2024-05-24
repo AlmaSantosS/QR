@@ -11,8 +11,8 @@ import 'package:esqrcode/src/pages/first.dart';
 import 'package:esqrcode/src/pages/second.dart';
 
 Map<String, Widget Function(BuildContext)> appRoutes = {
-Routes.login: (_) => const Login(),
-Routes.register: (_) => const Register(),
+Routes.login: (_) =>  LoginPage(),
+Routes.register: (_) =>  RegisterPage(),
 
 
 };
