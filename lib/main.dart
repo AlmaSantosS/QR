@@ -1,6 +1,8 @@
-import 'first.dart';
-import 'second.dart';
+import 'src/pages/first.dart';
+//import 'src/pages/second.dart';
 import 'package:flutter/material.dart';
+import 'package:esqrcode/src/account/login.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -15,7 +17,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Home(),
+      home: LoginPage(),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -57,7 +59,7 @@ class _HomeState extends State<Home> {
         body:  TabBarView(
           children: [
             First(),
-            Second(),
+            //Second(),
           ],
         ),
       ),
