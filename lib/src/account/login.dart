@@ -1,21 +1,7 @@
+// lib/login_page.dart
+
 import 'package:flutter/material.dart';
-
-void main() {
-  runApp(LoginApp());
-}
-
-class LoginApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Login App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: LoginPage(),
-    );
-  }
-}
+import 'package:esqrcode/src/account/register.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -73,6 +59,16 @@ class _LoginPageState extends State<LoginPage> {
                   }
                 },
                 child: Text('Login'),
+              ),
+              SizedBox(height: 16.0),
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => RegisterPage()),
+                  );
+                },
+                child: Text('Don\'t have an account? Register here'),
               ),
             ],
           ),
