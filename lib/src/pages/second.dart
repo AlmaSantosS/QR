@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_qr_bar_scanner/qr_bar_scanner_camera.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Second extends StatefulWidget {
   @override
@@ -10,11 +13,52 @@ class _SecondState extends State<Second> {
   String? _qrInfo = 'QrNova';
   bool camState = false;
 
-  qrCallback(String? code) {
+  qrCallback(String? code) async {
     setState(() {
       camState = false;
       _qrInfo = code;
     });
+    if (code != null) {
+      await _saveURL(code);
+    }
+  }
+
+  Future<void> _launchURL(String url) async {
+    try {
+      Uri uri = Uri.parse(url);
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri);
+      } else {
+        throw 'Could not launch $url';
+      }
+    } catch (e) {
+      print('Error launching URL: $e');
+    }
+  }
+
+  Future<void> _saveURL(String url) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('savedURL', url);
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('URL guardada')),
+    );
+  }
+
+  Future<void> _loadURL() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? savedURL = prefs.getString('savedURL');
+    if (savedURL != null) {
+      setState(() {
+        _qrInfo = savedURL;
+      });
+    }
+  }
+
+  void _copyToClipboard(String text) {
+    Clipboard.setData(ClipboardData(text: text));
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('URL copiada al portapapeles')),
+    );
   }
 
   @override
@@ -23,6 +67,7 @@ class _SecondState extends State<Second> {
     setState(() {
       camState = true;
     });
+    _loadURL();
   }
 
   @override
@@ -30,17 +75,11 @@ class _SecondState extends State<Second> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          if (camState == true) {
-            setState(() {
-              camState = false;
-            });
-          } else {
-            setState(() {
-              camState = true;
-            });
-          }
+          setState(() {
+            camState = !camState;
+          });
         },
-        child:const Icon(Icons.camera),
+        child: const Icon(Icons.camera),
       ),
       body: camState
           ? Center(
@@ -64,11 +103,37 @@ class _SecondState extends State<Second> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Code :" + _qrInfo!,
+                    "Code:",
                     style: const TextStyle(
                       fontSize: 25,
                     ),
                   ),
+                  if (_qrInfo != null && _qrInfo != 'QrNova')
+                    Column(
+                      children: [
+                        GestureDetector(
+                          onTap: () => _launchURL(_qrInfo!),
+                          child: Text(
+                            _qrInfo!,
+                            style: const TextStyle(
+                              fontSize: 18,
+                              color: Colors.blue,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        ElevatedButton(
+                          onPressed: () => _copyToClipboard(_qrInfo!),
+                          child: Text('Copiar URL'),
+                        ),
+                        SizedBox(height: 10),
+                        ElevatedButton(
+                          onPressed: () => _saveURL(_qrInfo!),
+                          child: Text('Guardar URL'),
+                        ),
+                      ],
+                    ),
                 ],
               ),
             ),

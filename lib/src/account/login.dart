@@ -5,7 +5,6 @@ import 'package:esqrcode/src/pages/first.dart'; // Página que muestra después 
 import 'package:esqrcode/src/pages/second.dart';
 import 'package:esqrcode/main.dart';
 
-
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -74,101 +73,103 @@ class _LoginPageState extends State<LoginPage> {
             'assets/imgf.jpg',
             fit: BoxFit.cover,
           ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  // Logotipo
-                  Image.asset(
-                    'assets/nelo.png', // Cambia la ruta al logotipo que desees usar
-                    height: 200.0, // Ajusta el tamaño según tus necesidades
-                  ),
-                  SizedBox(height: 12.0), // Espacio entre el logotipo y el primer campo de entrada
-                  TextFormField(
-                    controller: _emailController,
-                    decoration: InputDecoration(
-                      labelText: 'Email',
-                      prefixIcon: Icon(Icons.email),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: const Color.fromARGB(255, 0, 0, 0)),
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.blue),
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      labelStyle: TextStyle(color: const Color.fromARGB(255, 0, 0, 0)),
-                      filled: true,
-                      fillColor: const Color.fromARGB(255, 0, 0, 0).withOpacity(0.2),
+          SingleChildScrollView(  // Envuelve el contenido en SingleChildScrollView
+            child: Padding(
+              padding: const EdgeInsets.all(6.0),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    // Logotipo
+                    Image.asset(
+                      'assets/nelo.png', // Cambia la ruta al logotipo que desees usar
+                      height: 150.0, // Ajusta el tamaño según tus necesidades
                     ),
-                    keyboardType: TextInputType.emailAddress,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Por favor introduzca su correo electrónico';
-                      }
-                      if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                        return 'Por favor, introduce una dirección de correo electrónico válida';
-                      }
-                      return null;
-                    },
-                    style: TextStyle(color: const Color.fromARGB(255, 0, 0, 0)),
-                  ),
-                  SizedBox(height: 16.0),
-                  TextFormField(
-                    controller: _passwordController,
-                    decoration: InputDecoration(
-                      labelText: 'Password',
-                      prefixIcon: Icon(Icons.lock),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
+                    SizedBox(height: 6.0), // Espacio entre el logotipo y el primer campo de entrada
+                    TextFormField(
+                      controller: _emailController,
+                      decoration: InputDecoration(
+                        labelText: 'Email',
+                        prefixIcon: Icon(Icons.email),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: const Color.fromARGB(255, 0, 0, 0)),
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blue),
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        labelStyle: TextStyle(color: const Color.fromARGB(255, 0, 0, 0)),
+                        filled: true,
+                        fillColor: const Color.fromARGB(255, 0, 0, 0).withOpacity(0.2),
                       ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: const Color.fromARGB(255, 0, 0, 0)),
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.blue),
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      labelStyle: TextStyle(color: const Color.fromARGB(255, 0, 0, 0)),
-                      filled: true,
-                      fillColor: const Color.fromARGB(255, 0, 0, 0).withOpacity(0.2),
+                      keyboardType: TextInputType.emailAddress,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Por favor introduzca su correo electrónico';
+                        }
+                        if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                          return 'Por favor, introduce una dirección de correo electrónico válida';
+                        }
+                        return null;
+                      },
+                      style: TextStyle(color: const Color.fromARGB(255, 0, 0, 0)),
                     ),
-                    obscureText: true,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Por favor, introduzca su contraseña';
-                      }
-                      return null;
-                    },
-                    style: TextStyle(color: const Color.fromARGB(255, 0, 0, 0)),
-                  ),
-                  SizedBox(height: 32.0),
-                  ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        _login();
-                      }
-                    },
-                    child: Text('Login'),
-                  ),
-                  SizedBox(height: 16.0),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => RegisterPage()),
-                      );
-                    },
-                    child: Text('¿No tienes una cuenta? Registrar aquí'),
-                  ),
-                ],
+                    SizedBox(height: 16.0),
+                    TextFormField(
+                      controller: _passwordController,
+                      decoration: InputDecoration(
+                        labelText: 'Password',
+                        prefixIcon: Icon(Icons.lock),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: const Color.fromARGB(255, 0, 0, 0)),
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blue),
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        labelStyle: TextStyle(color: const Color.fromARGB(255, 0, 0, 0)),
+                        filled: true,
+                        fillColor: const Color.fromARGB(255, 0, 0, 0).withOpacity(0.2),
+                      ),
+                      obscureText: true,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Por favor, introduzca su contraseña';
+                        }
+                        return null;
+                      },
+                      style: TextStyle(color: const Color.fromARGB(255, 0, 0, 0)),
+                    ),
+                    SizedBox(height: 32.0),
+                    ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          _login();
+                        }
+                      },
+                      child: Text('Login'),
+                    ),
+                    SizedBox(height: 16.0),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => RegisterPage()),
+                        );
+                      },
+                      child: Text('¿No tienes una cuenta? Registrar aquí'),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
