@@ -4,10 +4,10 @@ buildscript {
         google()
         mavenCentral()
     }
-
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        implementation(platform("com.google.firebase:firebase-bom:33.0.0"))
+        classpath "com.android.tools.build:gradle:7.0.2" // Update to the version you need
+        classpath "com.google.gms:google-services:4.4.1"
     }
 }
 
@@ -28,13 +28,4 @@ subprojects {
 
 tasks.register("clean", Delete) {
     delete rootProject.buildDir
-}
-
-plugins {
-
-  // Add the dependency for the Google services Gradle plugin
-  id("com.google.gms.google-services") version "4.4.1" apply false
-  id("com.android.application")
-  id("com.google.gms.google-services")
-
 }

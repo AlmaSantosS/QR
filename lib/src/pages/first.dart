@@ -19,10 +19,6 @@ class _FirstState extends State<First> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Generador de QR', style: TextStyle(color: Colors.white)),
-        backgroundColor: ui.Color.fromARGB(255, 99, 203, 255),
-      ),
       body: Center(
         child: SingleChildScrollView(
           padding: EdgeInsets.all(16),
