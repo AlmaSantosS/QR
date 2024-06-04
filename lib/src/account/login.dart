@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:esqrcode/src/account/register.dart';
 import 'package:esqrcode/src/pages/first.dart'; // Página que muestra después de un inicio de sesión exitoso
 import 'package:esqrcode/src/pages/second.dart';
+import 'package:esqrcode/main.dart';
+
 
 class LoginPage extends StatefulWidget {
   @override
@@ -30,7 +32,7 @@ class _LoginPageState extends State<LoginPage> {
         );
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => First()),
+          MaterialPageRoute(builder: (context) => Home()),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
