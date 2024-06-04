@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 import 'dart:ui' as ui;
+import 'package:esqrcode/src/account/login.dart';
 import 'package:flutter/material.dart';
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/rendering.dart';
@@ -12,69 +13,104 @@ class First extends StatefulWidget {
 
 class _FirstState extends State<First> {
   TextEditingController title = TextEditingController();
-  TextEditingController content = TextEditingController();
   var code = '';
   GlobalKey globalKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Generador de QR', style: TextStyle(color: Colors.white)),
+        backgroundColor: ui.Color.fromARGB(255, 99, 203, 255),
+      ),
       body: Center(
         child: SingleChildScrollView(
+          padding: EdgeInsets.all(16),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
-                padding: EdgeInsets.all(35),
+                padding: EdgeInsets.all(16),
                 child: Container(
-                  decoration: BoxDecoration(border: Border.all()),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                   child: TextFormField(
                     controller: title,
                     textAlign: TextAlign.center,
-                    decoration: const InputDecoration(
-                      hintText: ' Code ',
+                    decoration: InputDecoration(
+                      hintText: 'Introduce el código',
+                      border: InputBorder.none,
+                      contentPadding: EdgeInsets.all(10),
                     ),
                   ),
                 ),
               ),
+              SizedBox(height: 10),
               MaterialButton(
-                color: const ui.Color.fromARGB(255, 175, 230, 255),
+                color: ui.Color.fromARGB(255, 99, 203, 255),
                 onPressed: () {
                   setState(() {
                     code = title.text;
                   });
                 },
-                child:  const Text(
-                  "Create",
+                child: Text(
+                  "Generar",
                   style: TextStyle(
-                    color: ui.Color.fromARGB(255, 0, 0, 0),
+                    color: Colors.white,
                     fontSize: 20,
                   ),
                 ),
               ),
-              if (code == '') Container() else RepaintBoundary(
+              SizedBox(height: 20),
+              if (code.isNotEmpty)
+                Column(
+                  children: [
+                    RepaintBoundary(
                       key: globalKey,
                       child: Container(
-                        color: Colors.black, // Establecer el color de fondo negro
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                         child: BarcodeWidget(
                           barcode: Barcode.qrCode(
                             errorCorrectLevel: BarcodeQRCorrectionLevel.high,
                           ),
                           color: Colors.white,
-                          data: '$code',
+                          data: code,
                           width: 200,
                           height: 200,
                         ),
                       ),
                     ),
-               const SizedBox(height: 20),
-              code == ''
-                  ? Container()
-                  : ElevatedButton(
-                      onPressed: () {
-                        _captureAndSavePng();
-                      },
-                      child: const  Text("Descargar QR"),
+                    SizedBox(height: 20),
+                    ElevatedButton.icon(
+                      onPressed: _captureAndSavePng,
+                      icon: Icon(Icons.download),
+                      label: Text("Descargar QR"),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: ui.Color.fromARGB(255, 241, 240, 247),
+                      ),
                     ),
+                  ],
+                ),
+              SizedBox(height: 20),
+              ElevatedButton.icon(
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginPage()),
+                  );
+                },
+                icon: Icon(Icons.arrow_back),
+                label: Text("Regresar a Inicio de Sesión"),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: ui.Color.fromARGB(255, 253, 253, 255),
+                ),
+              ),
             ],
           ),
         ),
@@ -96,12 +132,14 @@ class _FirstState extends State<First> {
         final result = await ImageGallerySaver.saveImage(
             byteData.buffer.asUint8List(),
             name: "qr_code");
-        print(result);
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text("QR Code saved successfully"),
+          content: Text("Código QR guardado exitosamente"),
         ));
       }
     } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text("Error al guardar el código QR"),
+      ));
       print(e);
     }
   }
