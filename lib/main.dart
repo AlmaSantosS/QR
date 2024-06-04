@@ -1,5 +1,5 @@
 import 'src/pages/first.dart';
-//import 'src/pages/second.dart';
+import 'src/pages/second.dart';
 import 'package:flutter/material.dart';
 import 'package:esqrcode/src/account/login.dart';
 
@@ -66,7 +66,7 @@ class _HomeState extends State<Home> {
         body:  TabBarView(
           children: [
             First(),
-            //Second(),
+            Second(),
           ],
         ),
       ),
