@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:esqrcode/src/account/register.dart';
 import 'package:esqrcode/src/pages/first.dart'; // Página que muestra después de un inicio de sesión exitoso
+import 'package:esqrcode/src/pages/second.dart';
 
 class LoginPage extends StatefulWidget {
   @override
